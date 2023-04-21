@@ -1,4 +1,4 @@
-package fje.edu.m03uf6peojecterestaurant;
+package fje.edu.m03uf6projecterestaurant;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
