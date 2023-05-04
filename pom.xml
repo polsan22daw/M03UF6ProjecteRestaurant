@@ -42,6 +42,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.27</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -65,7 +70,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                fje.edu.m03uf6peojecterestaurant/fje.edu.m03uf6peojecterestaurant.HelloApplication
+                                fje.edu.m03uf6peojecterestaurant/fje.edu.m03uf6projecterestaurant.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
