@@ -7,4 +7,6 @@ module fje.edu.m03uf6peojecterestaurant {
 
     opens fje.edu.m03uf6projecterestaurant to javafx.fxml;
     exports fje.edu.m03uf6projecterestaurant;
+    exports fje.edu.m03uf6projecterestaurant.classes;
+    opens fje.edu.m03uf6projecterestaurant.classes to javafx.fxml;
 }

@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author sergi grau
  * @version 2.0, 02.02.2012
  */
-class ConnexioMesProves {
+public class ConnexioMesProves {
 
     public static void main(String args[]) {
         try {
@@ -37,17 +37,27 @@ class ConnexioMesProves {
         try {
             Statement stat = conn.createStatement();
 
-            stat.executeUpdate("CREATE TABLE test (text CHAR(20))");
-            stat.executeUpdate("INSERT INTO test VALUES ('sergi')");
-            stat.executeUpdate("INSERT INTO test VALUES ('paco')");
-            stat.executeUpdate("INSERT INTO test VALUES ('rafael')");
+            //stat.executeUpdate("CREATE TABLE plat (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, nom VARCHAR(50), descripcio VARCHAR(200), preu DOUBLE, urlIMG VARCHAR(200), categoria VARCHAR(50), ingredients VARCHAR(200))");
 
-            ResultSet resultat = stat.executeQuery("SELECT * FROM test");
-            if (resultat.next()) {
-                System.out.println(resultat.getString(1));
+            stat.executeUpdate("INSERT INTO plat (nom, descripcio, preu, urlIMG, categoria, ingredients)"
+                    + "VALUES ('Plato 1', 'Descripción del plato 1', 10.99, 'https://example.com/image1.jpg', 'Primers', 'Ingrediente 1, Ingrediente 2')");
+            stat.executeUpdate("INSERT INTO plat (nom, descripcio, preu, urlIMG, categoria, ingredients)"
+                    + "VALUES ('Plato 2', 'Descripción del plato 2', 15.99, 'https://example.com/image2.jpg', 'Segons', 'Ingrediente 3, Ingrediente 4')");
+            System.out.println("Valores insertados en la tabla 'plat' correctamente.");
+
+            ResultSet resultat = stat.executeQuery("SELECT * FROM plat");
+            while (resultat.next()) {
+                System.out.println("Id: " + resultat.getInt("id")
+                        + ", Nom: " + resultat.getString("nom")
+                        + ", Descripció: " + resultat.getString("descripcio")
+                        + ", Preu: " + resultat.getDouble("preu")
+                        + ", URL de la imatge: " + resultat.getString("urlIMG")
+                        + ", Categoría: " + resultat.getString("categoria")
+                        + ", Ingredients: " + resultat.getString("ingredients"));
             }
             resultat.close();
-            //stat.executeUpdate("DROP TABLE prova");
+            // stat.executeUpdate("DROP TABLE plat");
+            // System.out.println("Tabla 'plat' eliminada correctamente.");
         } finally {
             conn.close();
         }
@@ -61,7 +71,7 @@ class ConnexioMesProves {
      */
     public static Connection obtenirConnexio() throws SQLException, IOException {
         Properties props = new Properties();
-        FileInputStream in = new FileInputStream("C:\\Users\\angel\\Desktop\\DAW\\M03\\UF6\\PrimerJDBC\\src\\main\\resources\\database.properties");
+        FileInputStream in = new FileInputStream("C:\\Users\\polsa\\OneDrive\\Escritorio\\DAW2\\M03\\UF6\\M03UF6ProjecteRestaurant\\src\\main\\resources\\database.properties");
         props.load(in);
         in.close();
 

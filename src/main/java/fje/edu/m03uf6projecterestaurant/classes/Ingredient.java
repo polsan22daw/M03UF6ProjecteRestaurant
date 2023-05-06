@@ -1,11 +1,11 @@
-package fje.edu.m03uf6projecterestaurant;
+package fje.edu.m03uf6projecterestaurant.classes;
 
 public class Ingredient {
     private int id;
     private String nom;
-    private int preu;
+    private double preu;
 
-    public Ingredient(int id, String nom, int preu) {
+    public Ingredient(int id, String nom, double preu) {
         this.id = id;
         this.nom = nom;
         this.preu = preu;
@@ -27,11 +27,11 @@ public class Ingredient {
         this.nom = nom;
     }
 
-    public int getPreu() {
+    public double getPreu() {
         return preu;
     }
 
-    public void setPreu(int preu) {
+    public void setPreu(double preu) {
         this.preu = preu;
     }
 }
