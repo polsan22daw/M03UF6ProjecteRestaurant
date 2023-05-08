@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory?>
+<?import javafx.stage.FileChooser?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fje.edu.m03uf6projecterestaurant.controllers.EditarEsborrarPlatController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <Label layoutX="17.0" layoutY="14.0" text="Crear Plato">
+        <font>
+            <javafx.scene.text.Font size="18.0" />
+        </font>
+    </Label>
+
+    <Label layoutX="17.0" layoutY="53.0" text="Nom:" />
+    <TextField fx:id="camp_nom" layoutX="97.0" layoutY="50.0" />
+
+    <Label layoutX="17.0" layoutY="90.0" text="Descripció:" />
+    <TextArea fx:id="camp_descripcio" layoutX="97.0" layoutY="90.0" prefHeight="100.0" prefWidth="200.0" />
+
+    <Label layoutX="17.0" layoutY="200.0" text="Preu:" />
+    <TextField fx:id="camp_preu" layoutX="97.0" layoutY="197.0" />
+
+    <Label layoutX="17.0" layoutY="234.0" text="Ingredients:" />
+    <TextArea fx:id="camp_ingredients" layoutX="97.0" layoutY="234.0" prefHeight="100.0" prefWidth="200.0" />
+
+    <Label layoutX="17.0" layoutY="340.0" text="Imatge:" />
+    <TextField fx:id="camp_UrlIMG" layoutX="97.0" layoutY="370.0" />
+
+    <Button fx:id="EditarButton" layoutX="518.0" layoutY="364.0" text="Editar" />
+    <Button fx:id="EsborrarButton" layoutX="518.0" layoutY="364.0" text="Esborrar" />
+    <Button fx:id="previousButton" layoutX="142.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" text="Tornar enrere" />
+
+</AnchorPane>

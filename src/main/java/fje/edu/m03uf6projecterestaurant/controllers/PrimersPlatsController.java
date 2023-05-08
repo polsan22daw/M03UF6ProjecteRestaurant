@@ -33,4 +33,24 @@ public class PrimersPlatsController {
         stage.setScene(scene);
         stage.show();
     }
+/*
+    @FXML
+    private Button button1;
+    @FXML
+    private Button button2;
+    @FXML
+    private Button button3;
+    public void actualitzarImatges() {
+        PlatDAO platDAO = new PlatDAO();
+        try {
+            Image image1 = platDAO.obtenirImatgeDeUrl("https://i.pinimg.com/originals/16/4c/fa/164cfa87a4129f997c25281a4e2def07.png");
+            button1.setGraphic(new ImageView(image1));
+            Image image2 = platDAO.obtenirImatgeDeUrl("https://i.pinimg.com/originals/16/4c/fa/164cfa87a4129f997c25281a4e2def07.png");
+            button2.setGraphic(new ImageView(image2));
+            Image image3 = platDAO.obtenirImatgeDeUrl("https://i.pinimg.com/originals/16/4c/fa/164cfa87a4129f997c25281a4e2def07.png");
+            button3.setGraphic(new ImageView(image3));
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }*/
 }

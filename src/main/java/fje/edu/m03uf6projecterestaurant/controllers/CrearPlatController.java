@@ -51,9 +51,10 @@ public class CrearPlatController {
         PlatDAO platDAO = new PlatDAOImpl(obtenirConnexio());
         platDAO.createPlat(plat);
 
-        System.out.println(plat);
-
-        Stage stage = (Stage) crearButton.getScene().getWindow();
-        stage.close();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

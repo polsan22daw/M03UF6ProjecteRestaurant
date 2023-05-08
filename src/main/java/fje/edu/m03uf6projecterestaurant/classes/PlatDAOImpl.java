@@ -1,8 +1,10 @@
 package fje.edu.m03uf6projecterestaurant.classes;
 
+import javafx.scene.image.Image;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
 
 import static fje.edu.m03uf6projecterestaurant.ConnexioMesProves.obtenirConnexio;
 
@@ -11,38 +13,6 @@ public class PlatDAOImpl implements PlatDAO {
 
     public PlatDAOImpl(Connection connection) {
         this.connection = connection;
-    }
-
-    private ArrayList<Ingredient> getIngredientsByPlatId(int platId) {
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            preparedStatement = connection.prepareStatement("SELECT i.* FROM plat p JOIN ingredient_plat ip ON p.id = ip.plat_id JOIN ingredient i ON ip.ingredient_id = i.id WHERE p.id = ?");
-            preparedStatement.setInt(1, platId);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Ingredient ingredient = new Ingredient(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nom"),
-                        resultSet.getDouble("preu")
-                );
-                ingredients.add(ingredient);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return ingredients;
     }
 
     @Override
@@ -150,5 +120,27 @@ public class PlatDAOImpl implements PlatDAO {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Image obtenirImatgeDeUrl(String url) throws SQLException, IOException {
+        Image image = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = obtenirConnexio();
+            statement = connection.prepareStatement("SELECT imatge FROM plat WHERE urlIMG = ?");
+            statement.setString(1, url);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                InputStream inputStream = resultSet.getBinaryStream("imatge");
+                image = new Image(inputStream);
+            }
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+        return image;
     }
 }

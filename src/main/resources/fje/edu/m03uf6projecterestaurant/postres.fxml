@@ -41,6 +41,6 @@
             </graphic>
         </Button>
         <Button fx:id="previousButton" layoutX="142.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" text="Anterior" />
-        <Button fx:id="crearButton" layoutX="80.0" layoutY="435.0" mnemonicParsing="false" text="Crear"/>
+        <Button fx:id="crearButton" layoutX="80.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" text="Crear"/>
     </children>
 </AnchorPane>
