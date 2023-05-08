@@ -62,7 +62,7 @@ public class PlatDAOImpl implements PlatDAO {
                         resultSet.getString("nom"),
                         resultSet.getString("descripcio"),
                         resultSet.getDouble("preu"),
-                        getIngredientsByPlatId(id),
+                        resultSet.getString("ingredients"),
                         resultSet.getString("urlIMG")
                 );
             }
@@ -80,7 +80,7 @@ public class PlatDAOImpl implements PlatDAO {
         return plat;
     }
 
-    private static final String CREATE_SQL = "INSERT INTO plat (nom, descripcio, preu, urlIMG) VALUES (?, ?, ?, ?)";
+    private static final String CREATE_SQL = "INSERT INTO plat (nom, descripcio, preu, ingredients, urlIMG) VALUES (?, ?, ?, ?, ?)";
 
     @Override
     public boolean createPlat(Plat plat) throws SQLException {
@@ -95,22 +95,11 @@ public class PlatDAOImpl implements PlatDAO {
             statement.setString(1, plat.getNom());
             statement.setString(2, plat.getDescripcio());
             statement.setDouble(3, plat.getPreu());
-            statement.setString(4, plat.getUrlIMG());
+            statement.setString(4, plat.getIngredients());
+            statement.setString(5, plat.getUrlIMG());
 
             statement.executeUpdate();
             resultSet = statement.getGeneratedKeys();
-
-            if (resultSet.next()) {
-                generatedId = resultSet.getInt(1);
-                plat.setId(generatedId);
-
-                for (Ingredient ingredient : plat.getIngredients()) {
-                    statement = connection.prepareStatement("INSERT INTO ingredient_plat (plat_id, ingredient_id) VALUES (?, ?)");
-                    statement.setInt(1, generatedId);
-                    statement.setInt(2, ingredient.getId());
-                    statement.executeUpdate();
-                }
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -122,7 +111,7 @@ public class PlatDAOImpl implements PlatDAO {
         return generatedId > 0;
     }
 
-    private static final String UPDATE_PLAT_QUERY = "UPDATE plat SET nom = ?, descripcio = ?, preu = ?, kcal = ?, urlIMG = ? WHERE id = ?";
+    private static final String UPDATE_PLAT_QUERY = "UPDATE plat SET nom = ?, descripcio = ?, preu = ?, ingredients = ?, urlIMG = ? WHERE id = ?";
 
     @Override
     public boolean updatePlat(Plat plat) {

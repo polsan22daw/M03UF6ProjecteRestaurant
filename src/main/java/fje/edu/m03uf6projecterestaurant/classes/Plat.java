@@ -1,16 +1,14 @@
 package fje.edu.m03uf6projecterestaurant.classes;
 
-import java.util.ArrayList;
-
 public class Plat {
     private int id;
     private String nom;
     private String descripcio;
     private double preu;
-    private ArrayList<Ingredient> ingredients;
+    private String ingredients;
     private String urlIMG;
 
-    public Plat(int id, String nom, String descripcio, double preu, ArrayList<Ingredient> ingredients, String urlIMG) {
+    public Plat(int id, String nom, String descripcio, double preu, String ingredients, String urlIMG) {
         this.id = id;
         this.nom = nom;
         this.descripcio = descripcio;
@@ -51,11 +49,11 @@ public class Plat {
         this.preu = preu;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 

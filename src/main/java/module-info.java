@@ -9,4 +9,6 @@ module fje.edu.m03uf6peojecterestaurant {
     exports fje.edu.m03uf6projecterestaurant;
     exports fje.edu.m03uf6projecterestaurant.classes;
     opens fje.edu.m03uf6projecterestaurant.classes to javafx.fxml;
+    exports fje.edu.m03uf6projecterestaurant.controllers;
+    opens fje.edu.m03uf6projecterestaurant.controllers to javafx.fxml;
 }
