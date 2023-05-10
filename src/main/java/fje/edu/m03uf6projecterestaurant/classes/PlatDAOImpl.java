@@ -22,6 +22,7 @@ public class PlatDAOImpl implements PlatDAO {
         ResultSet resultSet = null;
 
         try {
+
             preparedStatement = connection.prepareStatement("SELECT * FROM plat WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();

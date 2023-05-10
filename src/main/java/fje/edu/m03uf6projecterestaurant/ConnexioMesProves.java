@@ -31,13 +31,13 @@ public class ConnexioMesProves {
      * registres. Finalment esborra la taula creada
      */
     public static void executarTest() throws SQLException, IOException {
-        Connection conn = obtenirConnexio();
+        Connection conn = obtenirConnexioPrincipal();
         ResultSet rs = null;
         String NOMBRE_BD = "restaurant";
         Statement stattt = conn.createStatement();
         stattt.executeUpdate("CREATE DATABASE IF NOT EXISTS restaurant");
         try {
-            conn = obtenirConnexio();
+            conn = obtenirConnexioPrincipal();
 
             // Comprobar si la base de datos existe
             rs = conn.getMetaData().getCatalogs();
@@ -148,6 +148,22 @@ public class ConnexioMesProves {
      *
      * @return la connexió amb la BD
      */
+    public static Connection obtenirConnexioPrincipal() throws SQLException, IOException {
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream("C:\\Users\\Marc Pedemonte\\IdeaProjects\\M03UF6ProjecteRestaurant\\src\\main\\resources\\databaseBase.properties");
+        props.load(in);
+        in.close();
+
+        String drivers = props.getProperty("jdbc.drivers");
+        if (drivers != null) {
+            System.setProperty("jdbc.drivers", drivers);
+        }
+        String url = props.getProperty("jdbc.url");
+        String usuari = props.getProperty("jdbc.username");
+        String password = props.getProperty("jdbc.password");
+
+        return DriverManager.getConnection(url, usuari, password);
+    }
     public static Connection obtenirConnexio() throws SQLException, IOException {
         Properties props = new Properties();
         FileInputStream in = new FileInputStream("C:\\Users\\Marc Pedemonte\\IdeaProjects\\M03UF6ProjecteRestaurant\\src\\main\\resources\\database.properties");
