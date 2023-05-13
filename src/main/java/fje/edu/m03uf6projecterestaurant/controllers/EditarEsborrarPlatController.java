@@ -9,12 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class EditarEsborrarPlatController {
 
@@ -57,36 +57,79 @@ public class EditarEsborrarPlatController {
     }
 
     @FXML
-    private void editarPlat(ActionEvent event) throws IOException {
+    private void editarPlat(ActionEvent event) throws IOException, SQLException {
         String nom = camp_nom.getText();
         String descripcio = camp_descripcio.getText();
         Double preu = Double.parseDouble(camp_preu.getText());
         String ingredients = camp_ingredients.getText();
         String urlIMG = camp_UrlIMG.getText();
 
-        Plat plat = new Plat(1, nom, descripcio, preu, ingredients, urlIMG, categoria);
+        Plat plat = new Plat(platSeleccionat.getId(), nom, descripcio, preu, ingredients, urlIMG, categoria);
 
         PlatDAO platDAO = new PlatDAOImpl();
-        platDAO.updatePlat(plat);
+        if (platDAO.updatePlat(plat)) {
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Informació");
+            info.setHeaderText(null);
+            info.setContentText("Plat actualitzat correctament!");
+            info.showAndWait();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
+            Parent root = loader.load();
+            PrimersPlatsController controller = loader.getController();
+            controller.inicialitzarBotonsPlats();
+            Scene scene = new Scene(root);
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.show();
+        } else {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error");
+            error.setHeaderText(null);
+            error.setContentText("No s'ha pogut actualitzar el plat!");
+            error.showAndWait();
+        }
     }
 
-    @FXML
-    private void esborrarPlat(ActionEvent event) throws IOException {
-        PlatDAO platDAO = new PlatDAOImpl();
-        platDAO.deletePlat(platSeleccionat.getId());
+    public void esborrarPlat() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmació");
+        alert.setHeaderText(null);
+        alert.setContentText("Estàs segur que vols eliminar aquest plat?");
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void setPlat(Plat platSeleccionat) {
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            PlatDAO platDAO = new PlatDAOImpl();
+            boolean eliminat = platDAO.deletePlat(platSeleccionat);
+            if (eliminat) {
+                Alert info = new Alert(Alert.AlertType.INFORMATION);
+                info.setTitle("Informació");
+                info.setHeaderText(null);
+                info.setContentText("Plat eliminat correctament!");
+                info.showAndWait();
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
+                    Parent root = loader.load();
+                    PrimersPlatsController controller = loader.getController();
+                    controller.inicialitzarBotonsPlats();
+                    Scene scene = EsborrarButton.getScene();
+                    scene.setRoot(root);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error");
+                error.setHeaderText(null);
+                error.setContentText("No s'ha pogut eliminar el plat!");
+                error.showAndWait();
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ public interface PlatDAO {
     Plat getPlatById(int id);
     boolean createPlat(Plat plat) throws SQLException;
     boolean updatePlat(Plat plat);
-    boolean deletePlat(int id);
+    boolean deletePlat(Plat plat);
 
     Image obtenirImatgeDeUrl(String url) throws SQLException, IOException;
 }

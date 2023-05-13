@@ -6,13 +6,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -99,32 +103,33 @@ public class PrimersPlatsController implements Initializable {
     }*/
 
     @FXML
-    public void mostrarFormulariEditar(ActionEvent event) throws IOException {
-        Button botonPresionado = (Button) event.getSource();
-        Plat platSeleccionado = null;
-        if (botonPresionado.getId().equals("button1")) {
-            platSeleccionado = new PlatDAOImpl().getPlatById(1);
-        } else if (botonPresionado.getId().equals("button2")) {
-            platSeleccionado = new PlatDAOImpl().getPlatById(2);
-        } else if (botonPresionado.getId().equals("button3")) {
-            platSeleccionado = new PlatDAOImpl().getPlatById(3);;
-        }
+    public void mostrarFormulariEditar(int idPlatSeleccionat) throws IOException {
+        Plat platSeleccionat = new PlatDAOImpl().getPlatById(idPlatSeleccionat);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fje/edu/m03uf6projecterestaurant/editar_esborrar_plat.fxml"));
         Parent root = loader.load();
         EditarEsborrarPlatController controlador = loader.getController();
-        controlador.setPlatSeleccionat(platSeleccionado);
-        Scene scene = botonPresionado.getScene();
+        controlador.setPlatSeleccionat(platSeleccionat);
+        Scene scene = scrollPane.getScene();
         scene.setRoot(root);
     }
 
     @FXML
     private ScrollPane scrollPane;
 
-    @FXML
-    private void inicialitzarBotonsPlats() throws SQLException {
+    public void inicialitzarBotonsPlats() throws SQLException {
         List<Plat> plats = new PlatDAOImpl().selectAllPlats();
         VBox vbox = new VBox();
-        vbox.setSpacing(10);
+        vbox.setSpacing(70);
+        vbox.setPadding(new Insets(20, 20, 20, 20));
+
+        Label title = new Label("Primers Plats");
+        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        vbox.getChildren().add(title);
+
+        HBox hbox = new HBox();
+        hbox.setSpacing(50);
+        hbox.setAlignment(Pos.CENTER);
+        int count = 0;
 
         for (Plat plat : plats) {
             if (plat.getCategoria().equals("primer plat")) {
@@ -136,14 +141,31 @@ public class PrimersPlatsController implements Initializable {
                 button.setGraphic(imgView);
                 button.setOnAction(e -> {
                     try {
-                        canviarEscenaAction(e);
+                        mostrarFormulariEditar(plat.getId());
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
-                vbox.getChildren().add(button);
+                button.setId(Integer.toString(plat.getId()));
+
+                VBox.setMargin(button, new Insets(20, 0, 0, 0));
+                hbox.getChildren().add(button);
+                count++;
+
+                if (count == 3) {
+                    vbox.getChildren().add(hbox);
+                    hbox = new HBox();
+                    hbox.setSpacing(50);
+                    hbox.setAlignment(Pos.CENTER);
+                    count = 0;
+                }
             }
         }
+
+        if (count != 0) {
+            vbox.getChildren().add(hbox);
+        }
+
         scrollPane.setContent(vbox);
     }
 }

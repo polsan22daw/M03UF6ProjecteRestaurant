@@ -150,7 +150,7 @@ public class ConnexioMesProves {
      */
     public static Connection obtenirConnexioPrincipal() throws SQLException, IOException {
         Properties props = new Properties();
-        FileInputStream in = new FileInputStream("C:\\Users\\Marc Pedemonte\\IdeaProjects\\M03UF6ProjecteRestaurant\\src\\main\\resources\\databaseBase.properties");
+        FileInputStream in = new FileInputStream("C:\\Users\\polsa\\OneDrive\\Escritorio\\DAW2\\M03\\UF6\\M03UF6ProjecteRestaurant\\src\\main\\resources\\database.properties");
         props.load(in);
         in.close();
 
@@ -166,7 +166,7 @@ public class ConnexioMesProves {
     }
     public static Connection obtenirConnexio() throws SQLException, IOException {
         Properties props = new Properties();
-        FileInputStream in = new FileInputStream("C:\\Users\\Marc Pedemonte\\IdeaProjects\\M03UF6ProjecteRestaurant\\src\\main\\resources\\database.properties");
+        FileInputStream in = new FileInputStream("C:\\Users\\polsa\\OneDrive\\Escritorio\\DAW2\\M03\\UF6\\M03UF6ProjecteRestaurant\\src\\main\\resources\\database.properties");
         props.load(in);
         in.close();
 

@@ -17,8 +17,8 @@ public class HelloApplication extends Application {
         executarTest();
         Parent root = FXMLLoader.load(getClass().getResource("primer_plat.fxml"));
         stage.setTitle("Restaurant");
-        //stage.setScene(new Scene(root, 800, 500));
-        stage.setScene(new Scene(root, 1400, 800));
+        stage.setScene(new Scene(root, 800, 500));
+        //stage.setScene(new Scene(root, 1400, 800));
         stage.show();
     }
 }
