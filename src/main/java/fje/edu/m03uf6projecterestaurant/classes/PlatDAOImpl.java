@@ -120,15 +120,15 @@ public class PlatDAOImpl implements PlatDAO {
     private static final String DELETE_PLAT_QUERY = "DELETE FROM plat WHERE id = ?";
 
     @Override
-    public boolean deletePlat(int id) {
+    public boolean deletePlat(Plat plat) {
         try (Connection conn = obtenirConnexio();
              PreparedStatement statement = conn.prepareStatement(DELETE_PLAT_QUERY)) {
 
-            statement.setInt(1, id);
+            statement.setInt(1, plat.getId());
             int rows = statement.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
-            System.err.println("Error deleting plat: " + e.getMessage());
+            System.err.println("Error esborrant plat: " + e.getMessage());
             return false;
         } catch (IOException e) {
             throw new RuntimeException(e);
