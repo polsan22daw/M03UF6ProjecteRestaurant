@@ -7,14 +7,16 @@ public class Plat {
     private double preu;
     private String ingredients;
     private String urlIMG;
+    private String categoria;
 
-    public Plat(int id, String nom, String descripcio, double preu, String ingredients, String urlIMG) {
+    public Plat(int id, String nom, String descripcio, double preu, String ingredients, String urlIMG, String categoria) {
         this.id = id;
         this.nom = nom;
         this.descripcio = descripcio;
         this.preu = preu;
         this.ingredients = ingredients;
         this.urlIMG = urlIMG;
+        this.categoria = categoria;
     }
 
     public int getId() {
@@ -63,5 +65,13 @@ public class Plat {
 
     public void setUrlIMG(String urlIMG) {
         this.urlIMG = urlIMG;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

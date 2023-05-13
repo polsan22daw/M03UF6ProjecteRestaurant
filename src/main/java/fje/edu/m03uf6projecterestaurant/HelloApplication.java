@@ -13,7 +13,8 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("primer_plat.fxml"));
         stage.setTitle("Restaurant");
-        stage.setScene(new Scene(root, 800, 500));
+        //stage.setScene(new Scene(root, 800, 500));
+        stage.setScene(new Scene(root, 1400, 800));
         stage.show();
     }
 }

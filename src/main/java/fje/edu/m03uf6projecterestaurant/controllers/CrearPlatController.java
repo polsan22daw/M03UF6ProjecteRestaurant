@@ -16,7 +16,16 @@ import java.sql.SQLException;
 
 import static fje.edu.m03uf6projecterestaurant.ConnexioMesProves.obtenirConnexio;
 
+
 public class CrearPlatController {
+
+
+    private static String categoria;
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     @FXML
     private void canviarEscenaAction(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -46,15 +55,25 @@ public class CrearPlatController {
         String ingredients = camp_ingredients.getText();
         String urlIMG = camp_UrlIMG.getText();
 
-        Plat plat = new Plat(1, nom, descripcio, preu, ingredients, urlIMG);
-
+        Plat plat = new Plat(1, nom, descripcio, preu, ingredients, urlIMG, categoria);
         PlatDAO platDAO = new PlatDAOImpl(obtenirConnexio());
         platDAO.createPlat(plat);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
+        Parent root;
+        if (categoria.equals("primer plat")) {
+            root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/primer_plat.fxml"));
+        } else if (categoria.equals("segon plat")) {
+            root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/segon_plat.fxml"));
+        } else if (categoria.equals("postre")) {
+            root = FXMLLoader.load(getClass().getResource("/fje/edu/m03uf6projecterestaurant/postres.fxml"));
+        } else {
+            throw new IllegalArgumentException("Categoría no válida");
+        }
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
 }

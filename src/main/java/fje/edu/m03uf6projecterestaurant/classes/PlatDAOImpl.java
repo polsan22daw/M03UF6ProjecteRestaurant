@@ -3,25 +3,33 @@ package fje.edu.m03uf6projecterestaurant.classes;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static fje.edu.m03uf6projecterestaurant.ConnexioMesProves.obtenirConnexio;
 
 public class PlatDAOImpl implements PlatDAO {
+    private static final String SELECT_ALL_PLATS_SQL = "SELECT * FROM Plat";
     private Connection connection;
 
-    public PlatDAOImpl(Connection connection) {
-        this.connection = connection;
+    public PlatDAOImpl(Connection connection) throws SQLException, IOException {
+        this.connection = obtenirConnexio();
+    }
+
+    public PlatDAOImpl() {
+
     }
 
     @Override
     public Plat getPlatById(int id) {
+        Connection connection = null;
         Plat plat = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
+            connection = obtenirConnexio();
             preparedStatement = connection.prepareStatement("SELECT * FROM plat WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -33,11 +41,14 @@ public class PlatDAOImpl implements PlatDAO {
                         resultSet.getString("descripcio"),
                         resultSet.getDouble("preu"),
                         resultSet.getString("ingredients"),
-                        resultSet.getString("urlIMG")
+                        resultSet.getString("urlIMG"),
+                        resultSet.getString("categoria")
                 );
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (resultSet != null) resultSet.close();
@@ -50,7 +61,7 @@ public class PlatDAOImpl implements PlatDAO {
         return plat;
     }
 
-    private static final String CREATE_SQL = "INSERT INTO plat (nom, descripcio, preu, ingredients, urlIMG) VALUES (?, ?, ?, ?, ?)";
+    private static final String CREATE_SQL = "INSERT INTO plat (nom, descripcio, preu, ingredients, urlIMG, categoria) VALUES (?, ?, ?, ?, ?, ?)";
 
     @Override
     public boolean createPlat(Plat plat) throws SQLException {
@@ -67,6 +78,7 @@ public class PlatDAOImpl implements PlatDAO {
             statement.setDouble(3, plat.getPreu());
             statement.setString(4, plat.getIngredients());
             statement.setString(5, plat.getUrlIMG());
+            statement.setString(6, plat.getCategoria());
 
             statement.executeUpdate();
             resultSet = statement.getGeneratedKeys();
@@ -91,6 +103,7 @@ public class PlatDAOImpl implements PlatDAO {
             statement.setString(1, plat.getNom());
             statement.setString(2, plat.getDescripcio());
             statement.setDouble(3, plat.getPreu());
+            statement.setString(4, plat.getIngredients());
             statement.setString(5, plat.getUrlIMG());
             statement.setInt(6, plat.getId());
 
@@ -122,6 +135,7 @@ public class PlatDAOImpl implements PlatDAO {
         }
     }
 
+    @Override
     public Image obtenirImatgeDeUrl(String url) throws SQLException, IOException {
         Image image = null;
         Connection connection = null;
@@ -129,12 +143,12 @@ public class PlatDAOImpl implements PlatDAO {
         ResultSet resultSet = null;
         try {
             connection = obtenirConnexio();
-            statement = connection.prepareStatement("SELECT imatge FROM plat WHERE urlIMG = ?");
+            statement = connection.prepareStatement("SELECT urlIMG FROM plat WHERE urlIMG = ?");
             statement.setString(1, url);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                InputStream inputStream = resultSet.getBinaryStream("imatge");
-                image = new Image(inputStream);
+                String imageUrl = resultSet.getString("urlIMG");
+                image = new Image(imageUrl);
             }
         } finally {
             if (resultSet != null) resultSet.close();
@@ -142,5 +156,42 @@ public class PlatDAOImpl implements PlatDAO {
             if (connection != null) connection.close();
         }
         return image;
+    }
+
+    public List<Plat> selectAllPlats() throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        List<Plat> plats = new ArrayList<>();
+
+        try {
+            connection = obtenirConnexio();
+            statement = connection.prepareStatement(SELECT_ALL_PLATS_SQL);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Plat plat = new Plat(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nom"),
+                        resultSet.getString("descripcio"),
+                        resultSet.getDouble("preu"),
+                        resultSet.getString("ingredients"),
+                        resultSet.getString("urlIMG"),
+                        resultSet.getString("categoria")
+                );
+
+                plats.add(plat);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+
+        return plats;
     }
 }
