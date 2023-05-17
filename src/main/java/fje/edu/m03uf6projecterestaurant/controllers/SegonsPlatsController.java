@@ -110,6 +110,7 @@ public class SegonsPlatsController implements Initializable {
                 imgView.setFitWidth(150);
                 Button button = new Button();
                 button.setGraphic(imgView);
+                button.setStyle("-fx-background-color: #bfbfbf; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #505050; -fx-border-width: 2px;");
                 button.setOnAction(e -> {
                     try {
                         mostrarFormulariEditar(plat.getId());

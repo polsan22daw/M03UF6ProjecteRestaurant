@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.SpinnerValueFactory?>
-<?import javafx.stage.FileChooser?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fje.edu.m03uf6projecterestaurant.controllers.EditarEsborrarPlatController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fje.edu.m03uf6projecterestaurant.controllers.EditarEsborrarPlatController">
 
     <Label layoutX="17.0" layoutY="14.0" text="Editar o Esborrar Plat">
         <font>
@@ -21,23 +12,23 @@
         </font>
     </Label>
 
-    <Label layoutX="17.0" layoutY="53.0" text="Nom:" />
+    <Label layoutX="30.0" layoutY="54.0" text="Nom:" />
     <TextField fx:id="camp_nom" layoutX="97.0" layoutY="50.0" />
 
-    <Label layoutX="17.0" layoutY="90.0" text="Descripció:" />
+    <Label layoutX="17.0" layoutY="97.0" text="Descripció:" />
     <TextArea fx:id="camp_descripcio" layoutX="97.0" layoutY="90.0" prefHeight="100.0" prefWidth="200.0" />
 
-    <Label layoutX="17.0" layoutY="200.0" text="Preu:" />
+    <Label layoutX="31.0" layoutY="201.0" text="Preu:" />
     <TextField fx:id="camp_preu" layoutX="97.0" layoutY="197.0" />
 
-    <Label layoutX="17.0" layoutY="234.0" text="Ingredients:" />
+    <Label layoutX="15.0" layoutY="234.0" text="Ingredients:" />
     <TextArea fx:id="camp_ingredients" layoutX="97.0" layoutY="234.0" prefHeight="100.0" prefWidth="200.0" />
 
-    <Label layoutX="17.0" layoutY="340.0" text="Imatge:" />
+    <Label layoutX="24.0" layoutY="374.0" text="Imatge:" />
     <TextField fx:id="camp_UrlIMG" layoutX="97.0" layoutY="370.0" />
 
-    <Button fx:id="EditarButton" layoutX="518.0" layoutY="300.0" onAction="#editarPlat" text="Editar" />
-    <Button fx:id="EsborrarButton" layoutX="518.0" layoutY="364.0" onAction="#esborrarPlat" text="Esborrar" />
-    <Button fx:id="previousButton" layoutX="142.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" text="Tornar enrere" />
+    <Button fx:id="EditarButton" layoutX="97.0" layoutY="435.0" onAction="#editarPlat" style="-fx-font-size: 14px; -fx-pref-width: 100px; -fx-pref-height: 40px; -fx-background-color: #f68e27; -fx-text-fill: white; -fx-border-radius: 20px;" text="Editar" />
+    <Button fx:id="EsborrarButton" layoutX="231.0" layoutY="435.0" onAction="#esborrarPlat" style="-fx-font-size: 14px; -fx-pref-width: 100px; -fx-pref-height: 40px; -fx-background-color: #fc2121; -fx-text-fill: white; -fx-border-radius: 20px;" text="Esborrar" />
+    <Button fx:id="previousButton" layoutX="365.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-pref-height: 40px; -fx-background-color: #505050; -fx-text-fill: white; -fx-border-radius: 20px;" text="Tornar enrere" />
 
 </AnchorPane>

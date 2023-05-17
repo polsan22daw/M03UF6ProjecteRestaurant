@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fje.edu.m03uf6projecterestaurant.controllers.PostresController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fje.edu.m03uf6projecterestaurant.controllers.PostresController">
     <children>
         <ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
             <Label layoutX="262.0" layoutY="67.0" text="Postres">
@@ -22,7 +22,7 @@
                 </VBox>
             </content>
         </ScrollPane>
-        <Button fx:id="previousButton" layoutX="142.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" text="Anterior" />
-        <Button fx:id="crearButton" layoutX="80.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleBotonCrear" text="Crear"/>
+        <Button fx:id="previousButton" layoutX="229.0" layoutY="435.0" mnemonicParsing="false" onAction="#canviarEscenaAction" style="-fx-font-size: 14px; -fx-pref-width: 100px; -fx-pref-height: 40px; -fx-background-color: #505050; -fx-text-fill: white; -fx-border-radius: 20px;" text="Anterior" />
+        <Button fx:id="crearButton" layoutX="80.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleBotonCrear" text="Crear" style="-fx-font-size: 14px; -fx-pref-width: 100px; -fx-pref-height: 40px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-border-radius: 20px;"/>
     </children>
 </AnchorPane>
